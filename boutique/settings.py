@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', # Login via social media
+    'allauth', # app itself
+    'allauth.account', # basic user account features
+    'allauth.socialaccount', # Login via social media
 ]
 
 MIDDLEWARE = [
@@ -47,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'boutique.urls'
@@ -59,13 +64,33 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                'django.template.context_processors.request', # required by allauth - to access http request in templates
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of "allauth"
+    'django.contrib.auth.backends.ModelBackend',
+    
+    # Allauth specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+ACCOUNT_AUTHENTICATION_METHOD = "username_email" # Telling allauth its ok to use either username or email
+ACCOUNT_EMAIL_REQUIRED = True # Required to register to the site
+ACCOUNT_EMAIL_VERIFICATION = "mandatory" # So we know users use a real email
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True # Users need to register their email twice incase of typos
+ACCOUNT_USERNAME_MIN_LENGTH = 4 #User name must be a minimum of 4 characters
+LOGIN_URL = "/accounts/login/" # Specifiying  a URL login
+LOGIN_REDIRECT_URL = "/" # A URL to redirect back to after login in
 
 WSGI_APPLICATION = 'boutique.wsgi.application'
 
