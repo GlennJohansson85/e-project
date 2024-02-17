@@ -32,7 +32,67 @@
     <title>Boutique {% block extra_title %}{% endblock %}</title>
   </head>
   <body>
-    <header class="container-fluid fixed-top"></header> <!-- so its stays in the top -->
+    <header class="container-fluid fixed-top"> <!-- So it stays in top -->
+        <div class="row">
+            <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-center text-lg-left">
+                <a href="{% url 'home' %}" class="nav-link main-logo-link">
+                    <h2 class="logo-font text-black my-0"><strong>Boutique</strong> Ado</h2>
+                </a>
+            </div>
+            <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
+                <form method="GET" action="">
+                    <div class="input-group w-100"> <!-- 100% width input group -->
+                        <input class="form-control border border-black rounded-0" type="text" name="q" placeholder="Search our site"> <!-- Contains the input type "text" with the name "q" for query -->
+                        <div class="input-group-append"> <!-- Button attach to the text-input using the input-group append from Bootstrap -->
+                            <button class="form-control btn btn-black border border-black rounded-0" type="submit">
+                                <span class="icon">
+                                    <i class="fas fa-search"></i> <!-- Contains a search icon from font awesome -->
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
+                <ul class="list-inline list-unstyled text-center text-lg-right my-0"> <!-- Are used to line the list horisontally with no bullets -->
+                    <li class="list-inline-item dropdown">
+                        <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <!-- use data-toggle dropdown to link up to bootstrap javascript and open the dropdown menu when clicked -->
+                            <div class="text-center">
+                                <div><i class="fas fa-user fa-lg"></i></div> <!-- fontawesome user icon in "My Account" -->
+                                <p class="my-0">My Account</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu border-0" aria-labelledby="user-options">
+                            {% if request.user.is_authenticated %} <!-- If user is authenticated we want the dropdown to display their profile and link to logout -->
+                                {% if request.user.is_superuser %} <!-- If user is authenticated and a superuser we show a link to manage the store by adding, updating, deleting products -->
+                                    <a href="" class="dropdown-item">Product Management</a>
+                                {% endif %}
+                                <a href="" class="dropdown-item">My Profile</a>
+                                <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                            {% else %} <!-- If user is not authenticated we want the dropdown to display register and login-->
+                                <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
+                                <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href=""> <!-- if something is in the shoppingbad the font will be bold and colored -->
+                            <div class="text-center">
+                                <div><i class="fas fa-shopping-bag fa-lg"></i></div>
+                                <p class="my-0">
+                                    {% if grand_total %}
+                                        ${{ grand_total|floatformat:2 }}
+                                    {% else %}
+                                        $0.00
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
 
     {% if messages %}
         <div class="message-container"></div>
