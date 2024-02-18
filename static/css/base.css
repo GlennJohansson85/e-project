@@ -1,16 +1,16 @@
 html {
-    height: 100%;
+    height: 100%; /* Allows h-100 classes to work */
 }
 
 body {
-    background: url('/media/homepage_background_cropped.jpg') no-repeat center center fixed;
+    background: url('/media/homepage_background_cropped.jpg') no-repeat center center fixed; /* Ensures the background stays put in the center of the page */
     background-size: cover;
-    height: calc(100vh - 164px);
+    height: calc(100vh - 164px); /* Eventuell height of our topheader */
     color: #555;
     font-family: 'Lato';
 }
 
-/* from Bulma */
+/* ICON style - from Bulma - A css framework similar to bootstrap - Makes sure fontawesome icons always stays centered unless we change it*/
 .icon {
     align-items: center;
     display: inline-flex;
@@ -19,14 +19,19 @@ body {
     width: 1.5rem;
 }
 
+/* The logo font class will be used throughout this site
+to maintain consistency with the uppercase font of the logo
+whenever we want to call attention to something. */
 .logo-font {
     text-transform: uppercase;
 }
 
+/*just makes it so that the logo only takes up as much space as the text requires and no more.*/
 .main-logo-link {
     width: fit-content;
 }
 
+/*Line 35 - 54 = Styling used consistently throughout, so they match the theme of the shop now button on the homepage*/
 .shop-now-button {
     background: black;
     color: white;
@@ -48,6 +53,9 @@ body {
     color: white;
 }
 
+/* Line 58 - 64 = Similar to bootstraps colour helper classes like success text info and so on. In this bootstrap version there are no black classes.
+Created his own and marked them important because we´ll always want elements using these classes to obey them.
+These classes will allow us to have both primary and secondary call-to-action styling on all sites buttons.*/
 .text-black {
     color: #000 !important;
 }
@@ -58,13 +66,15 @@ body {
 
 /* -------------------------------- Media Queries */
 
+/* Widen the default bootstrap container class on extra-large screens just to make better use of the available sreen real estate for people with extra large monitors*/
 /* Slightly larger container on xl screens */
-@media (min-width: 1200px) {
+@media (min-width: 1200px) { 
   .container {
     max-width: 80%;
   }
 }
 
+/* Main site navbar - Since the main header will look different on mobile views. So we only want these to affect medium and larger screens.*/
 /* fixed top navbar only on medium and up */
 @media (min-width: 992px) {
     .fixed-top-desktop-only {
@@ -74,7 +84,9 @@ body {
         left: 0;
         z-index: 1030;
     }
-
+    
+/* Will add 164 pixels of padding to our header container class to push the body down to the bottom of the main page header.*/
+/*  This is the page header block that we added at the top of the index.html page in the home app. */
     .header-container {
         padding-top: 164px;
     }
