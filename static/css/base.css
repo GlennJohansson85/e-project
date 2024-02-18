@@ -64,6 +64,10 @@ These classes will allow us to have both primary and secondary call-to-action st
     border: 1px solid black !important;
 }
 
+.bg-black {
+    background: #000 !important;
+}
+
 /* -------------------------------- Media Queries */
 
 /* Widen the default bootstrap container class on extra-large screens just to make better use of the available sreen real estate for people with extra large monitors*/

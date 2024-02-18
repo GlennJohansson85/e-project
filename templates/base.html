@@ -95,6 +95,20 @@
                 </ul>
             </div>
         </div>
+        <div class="row bg-white"> <!-- Another white row underneath the top nav in the header portion -->
+            <nav class="navbar navbar-expand-lg navbar-light w-100"> <!--  Bootstraps collapsible navigation menu as our boilerplate - Comes from bootstrap navbar documentation - only added "w-100" -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation"> <!-- toggle menu -->
+                    <span class="navbar-toggler-icon"></span> <!-- -->
+                </button>
+                {% include 'includes/mobile-top-header.html' %} <!--includes the "mobile-top-header.html" from the folder includes -->
+                {% include 'includes/main-nav.html' %} <!-- includes the "main-nav.html" from the folder includes -->
+            </nav>
+        </div>
+        <div id="delivery-banner" class="row text-center"> <!-- row for the delivery banner -->
+            <div class="col bg-black text-white"> <!-- -->
+                <h4 class="logo-font my-1">Free delivery on orders over ${{ free_shipping_threshold }}!</h4> <!-- -->                
+            </div>            
+        </div>
     </header>
 
     {% if messages %}
