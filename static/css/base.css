@@ -68,6 +68,16 @@ These classes will allow us to have both primary and secondary call-to-action st
     background: #000 !important;
 }
 
+.overlay {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    background: white;
+    z-index: -1;
+}
+
 /* -------------------------------- Media Queries */
 
 /* Widen the default bootstrap container class on extra-large screens just to make better use of the available sreen real estate for people with extra large monitors*/
@@ -95,3 +105,13 @@ These classes will allow us to have both primary and secondary call-to-action st
         padding-top: 164px;
     }
 }
+
+/* pad the top a bit when navbar is collapsed on mobile */
+@media (max-width: 991px) {
+    .header-container {
+        padding-top: 116px;
+    }
+
+    body {
+        height: calc(100vh - 116px);
+    }
