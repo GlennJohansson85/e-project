@@ -15,12 +15,41 @@
         <div class="row">
             <div class="col text-center mt-3">
                 <h2 class="logo-font">Products</h2>
+                {% for c in current_categories %}
+                    <a class="category-badge text-decoration-none" href="{% url 'products' %}?category={{ c.name }}">
+                        <span class="p-2 mt-2 badge badge-white text-black rounded-0 border border-dark">{{ c.friendly_name }}</span>
+                    </a>
+                {% endfor %}
                 <hr class="w-50 mb-1">
             </div>
         </div>
         <div class="row">
             <div class="product-container col-10 offset-1">
-                <div class="row mt-1 mb-2"></div>
+                <div class="row mt-1 mb-2">
+                    <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
+                        <div class="sort-select-wrapper w-50">
+                            <select id="sort-selector" class="custom-select custom-select-sm rounded-0 border border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
+                                <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
+                                <option value="price_asc" {% if current_sorting == 'price_asc' %}selected{% endif %}>Price (low to high)</option>
+                                <option value="price_desc" {% if current_sorting == 'price_desc' %}selected{% endif %}>Price (high to low)</option>
+                                <option value="rating_asc" {% if current_sorting == 'rating_asc' %}selected{% endif %}>Rating (low to high)</option>
+                                <option value="rating_desc" {% if current_sorting == 'rating_desc' %}selected{% endif %}>Rating (high to low)</option>
+                                <option value="name_asc" {% if current_sorting == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
+                                <option value="name_desc" {% if current_sorting == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
+                                <option value="category_asc" {% if current_sorting == 'category_asc' %}selected{% endif %}>Category (A-Z)</option>
+                                <option value="category_desc" {% if current_sorting == 'category_desc' %}selected{% endif %}>Category (Z-A)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 order-md-first">
+                        <p class="text-muted mt-3 text-center text-md-left">
+                            {% if search_term or current_categories or current_sorting != 'None_None' %}
+                                <span class="small"><a href="{% url 'products' %}">Products Home</a> | </span>
+                            {% endif %}
+                            {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
+                        </p>
+                    </div>
+                </div>
                 <div class="row">
                     {% for product in products %}
                         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
@@ -41,6 +70,13 @@
                                     <div class="row">
                                         <div class="col">
                                             <p class="lead mb-0 text-left font-weight-bold">${{ product.price }}</p>
+                                            {% if product.category %}
+                                            <p class="small mt-1 mb-0">
+                                                <a class="text-muted" href="{% url 'products' %}?category={{ product.category.name }}">
+                                                    <i class="fas fa-tag mr-1"></i>{{ product.category.friendly_name }}
+                                                </a>
+                                            </p>
+                                            {% endif %}
                                             {% if product.rating %}
                                                 <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
                                             {% else %}
@@ -76,4 +112,41 @@
             </div>
         </div>
     </div>
+    <div class="btt-button shadow-sm rounded-0 border border-black"> <!-- Before we finish this part let's add a convenient back to top link to the products page. -->
+        <a class="btt-link d-flex h-100">
+            <i class="fas fa-arrow-up text-black mx-auto my-auto"></i>
+        </a>	
+    </div>
+{% endblock %}
+
+{% block postloadjs %}                                                                    <!-- wrap the entire script inside the post loadjs block from our base template. -->
+    {{ block.super }}                                                                           <!-- Using block.super will ensure we append this code to anything already in the block as opposed to replacing it. -->
+    <script type="text/javascript">                                                   //And then add a quick JavaScript to handle the click function for this link.Which will simply scroll to the top of the page.
+		$('.btt-link').click(function(e) {
+			window.scrollTo(0,0)
+		})
+	</script>
+    
+    <script type="text/javascript">
+        $('#sort-selector').change(function() {                                 //The first thing we need to do is capture the change event from the source selector itself
+            var selector = $(this);                                                         //Inside this function, I'll set a variable for the selector equal to this.
+            var currentUrl = new URL(window.location);                  // And one for the current url which is equal to a new url object that takes in the current Windows location.
+
+            var selectedVal = selector.val();                                       //Next I'm simply going to get the selected value from the selector box. And again this value refers to the value attribute from the selected option element in the selector box.
+            if(selectedVal != "reset"){                                                 // Once I have it. I need an if statement to determine if the selected value is reset. Indicating that we want to reset the sorting to the default that we would see on the products page. If it's not I can easily get the sort and direction by splitting the selected value at the underscore.
+                var sort = selectedVal.split("_")[0];                             // In this case, the first item from the split will be the item we're sorting on.
+                var direction = selectedVal.split("_")[1];                      //And the second will be the direction either ascending or descending.
+
+                currentUrl.searchParams.set("sort", sort);                  // All I need to do is replace those get parameters in the URL. Using the search params dot set method from the URL object.
+                currentUrl.searchParams.set("direction", direction);
+
+                window.location.replace(currentUrl);                          // Finally with the new URL constructed I'll replace the current location using window.location.replace with the updated current URL. Replacing the location will also cause the page to reload which will resort the products accordingly.
+            } else {                                                                                // If the user has selected the reset option.
+                currentUrl.searchParams.delete("sort");                     // I'll simply delete the sort and direction get parameters and then replace the location.
+                currentUrl.searchParams.delete("direction");
+
+                window.location.replace(currentUrl);
+            }
+        })
+    </script>
 {% endblock %}

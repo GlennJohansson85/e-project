@@ -5,9 +5,9 @@
                 All Products
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="all-products-link"><!--Next, I'm going to paste in the first list item which will be the all products menu.  triggers a drop-down of four other links which we'll fill in the href's for in a little while. this menu will allow the user to either see all products at once. Or sort them by price rating or category.-->
-                <a href="" class="dropdown-item">By Price</a><!-- -->
-                <a href="" class="dropdown-item ">By Rating</a><!-- -->
-                <a href="" class="dropdown-item ">By Category</a><!-- -->
+                <a href="{% url 'products' %}?sort=price&direction=asc" class="dropdown-item">By Price</a><!-- Add a get parameter of sort, setting it equal to price and a direction of ascending -->
+                <a href="{% url 'products' %}?sort=rating&direction=desc" class="dropdown-item ">By Rating</a><!-- Change the rating direction to descending because shoppers are more likeley to want to sort by highest to lowest rating by default-->
+                <a href="{% url 'products' %}?sort=category&direction=asc" class="dropdown-item ">By Category</a><!-- -->
                 <a href="{% url 'products' %}" class="dropdown-item">All Products</a><!-- -->
             </div>
         </li>

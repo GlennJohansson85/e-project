@@ -1,10 +1,8 @@
 from django.contrib import admin
-from. models import Product, Category
+from .models import Product, Category
 
 # Register your models here.
 # Classes below will extend the built in model admin class. The order is how it will be displayed on admin dashboard.
-
-
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
         'sku',
@@ -14,10 +12,9 @@ class ProductAdmin(admin.ModelAdmin):
         'rating',
         'image',
     )
-    
-    ordering = ('sku',) # sort the products by SKU using the ordering attribute.
 
-    
+    ordering = ('sku',)
+
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
         'friendly_name',

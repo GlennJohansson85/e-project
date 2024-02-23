@@ -78,6 +78,23 @@ These classes will allow us to have both primary and secondary call-to-action st
     z-index: -1;
 }
 
+a.category-badge > span.badge:hover {
+    background: #212529 !important;
+    color: #fff !important;
+}
+
+.btt-button {
+    height: 42px;
+    width: 42px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.btt-link {
+    cursor: pointer;
+}
+
 /* -------------------------------- Media Queries */
 
 /* Widen the default bootstrap container class on extra-large screens just to make better use of the available sreen real estate for people with extra large monitors*/
@@ -98,7 +115,6 @@ These classes will allow us to have both primary and secondary call-to-action st
         left: 0;
         z-index: 1030;
     }
-    
 /* Will add 164 pixels of padding to our header container class to push the body down to the bottom of the main page header.*/
 /*  This is the page header block that we added at the top of the index.html page in the home app. */
     .header-container {
