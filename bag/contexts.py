@@ -1,27 +1,36 @@
-from decimal import Decimal                                                                                   # Import the decimal function
-from django.conf import settings                                                                            # Import settings.py file
+from decimal import Decimal
+from django.conf import settings
 from django.shortcuts import get_object_or_404
 from products.models import Product
 
-
 def bag_contents(request):
-    
-    bag_items = []                                                                                                        # Empty list for the bag items to live in
-    total = 0                                                                                                                   # Eventually need total count when we start adding items to the bag  - - initialized to 0
-    product_count = 0                                                                                                  # Eventually need product_count when we start adding items to the bag - - initialized to 0
+
+    bag_items = []
+    total = 0
+    product_count = 0
     bag = request.session.get('bag', {})
-    
-    for item_id, quantity in bag.items():
-        product = get_object_or_404(Product, pk=item_id)
-        total += quantity * product.price
-        product_count += quantity
-        bag_items.append({
-            'item_id': item_id,
-            'quantity': quantity,
-            'product': product,
-            
-        })
-    
+
+    for item_id, item_data in bag.items():
+        if isinstance(item_data, int):
+            product = get_object_or_404(Product, pk=item_id)
+            total += item_data * product.price
+            product_count += item_data
+            bag_items.append({
+                'item_id': item_id,
+                'quantity': item_data,
+                'product': product,
+            })
+        else:
+            product = get_object_or_404(Product, pk=item_id)
+            for size, quantity in item_data['items_by_size'].items():
+                total += quantity * product.price
+                product_count += quantity
+                bag_items.append({
+                    'item_id': item_id,
+                    'quantity': item_data,
+                    'product': product,
+                    'size': size,
+                })
     
     if total < settings.FREE_DELIVERY_THRESHOLD:                                                # Checks whether there is less than 0 items in the back. 
         delivery = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE)   # If it is less we'll calculate delivery as the total multiplied by the standard delivery percentage from settings.py. which in this case is 10%.
