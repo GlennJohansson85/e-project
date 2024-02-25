@@ -24,7 +24,66 @@
             <div class="col">
                 {% if bag_items %}
                     <div class="table-responsive rounded">
-                        {{ bag_items }}
+                        <table class="table table-sm table-borderless">
+                            <thead class="text-black">
+                                <tr>
+                                    <th scope="col">Product info</th>                   
+                                    <th scope="col"></th>                                                                                          <!-- header is blank since the product info will span two columns. (col above) -->
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Qty</th>
+                                    <th scope="col">Subtotal</th>
+                                </tr>
+                            </thead>
+                            
+                            {% for item in bag_items %}                                                                                         <!-- Inside the table body, let's iterate through each item in the shopping bag. And create a row for each one. -->
+                                <tr>
+                                    <td class= "p-3 w-25">                                                                                           <!-- Contain the product image -->
+                                        <img class="img-fluid rounded" src="{{ item.product.image.url}}">
+                                    </td> 
+                                    <td class="py-3">                                                                                                    <!-- Contain the products name and SKU -->
+                                        <p class="my-0"><strong>{{ item.product.name }}</strong></p>
+                                        <p class="my-0 small text-muted">SKU: {{ item.product.sku|upper }}</p>
+                                    </td>
+                                    <td class="py-3">                                                                                                     <!-- Contain the price -->
+                                        <p class="my-0">${{ item.product.price }}</p>
+                                    </td>
+                                    <td class="py-3 w-25">                                                                                            <!-- Contain the quantity -->
+                                        <p class="my-0">{{ item.quantity }}</p>
+                                    </td>
+                                    <td class="py-3">                                                                                                      <!-- Contain the subtotal -->
+                                        <p class="my-0">${{ item.product.price }}</p>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                             <tr>
+                                <td colspan="5" class="pt-5 text-right">
+                                    <h6><strong>Bag Total: ${{ total|floatformat:2 }}</strong></h6>                                                                     <!-- Using the total -->
+                                    <h6>Delivery: ${{ delivery|floatformat:2 }}</h6>                                                                                                  <!-- and the delivery charges -->
+                                    <h4 class="mt-4"><strong>Grand Total: ${{ grand_total|floatformat:2 }}</strong></h4>                               <!-- and the grand_total-->
+                                    {% if free_delivery_delta > 0 %}                                                                                                                             <!-- and the free delivery_delta to show the user the summary of their cost and entice them to spend a little more if theyre under the free delivery threshold-->
+                                        <p class="mb-1 text-danger">
+                                            You could get free delivery by spending just <strong>${{ free_delivery_delta }}</strong> more!
+                                        </p>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="text-right">
+                                    <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg">                                                  <!-- Render a keep shopping button if they´re not done (72 - 77) -->
+                                        <span class="icon">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </span>
+                                        <span class="text-uppercase">Keep Shopping</span>
+                                    </a>
+                                    <a href="" class="btn btn-black rounded-0 btn-lg">                                                                                                 <!-- And a secure checkout button which will take them to the checkout page once it's created. -->
+                                        <span class="text-uppercase">Secure Checkout</span>
+                                        <span class="icon">
+                                            <i class="fas fa-lock"></i>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 {% else %} <!-- -->
                     <p class="lead mb-5">Your bag is empty.</p>
@@ -38,5 +97,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
