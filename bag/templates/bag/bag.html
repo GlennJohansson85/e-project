@@ -10,23 +10,25 @@
 {% endblock %}
 
 {% block content %}
-    <div class="overlay"></div>                                                                                                      <!-- First, we need the overlay to cover-up the background image. -->
-    <div class="container mb-2">                                                                                                    <!-- the layout will be similar to the products page, but it'll use a container instead of a container fluid. -->
-        <div class="row">                                                                                                                    <!--A row -->
-            <div class="col">                                                                                                                 <!-- With a single colum -->
-                <hr> <!-- -->
-                <h2 class="logo-font mb-4">Shopping Bag</h2>                                                        <!-- The first row contains the shopping bag heading, between a couple of horizontal rules. -->
+    <div class="overlay"></div>
+    <div class="container mb-2">
+        <div class="row">
+            <div class="col">
+                <hr>
+                <h2 class="logo-font mb-4">Shopping Bag</h2>
                 <hr>
             </div>
         </div>
         
-        <div class="row">                                                                                                                   <!-- A row -->
-            <div class="col">                                                                                                                <!-- with a single column -->
-                {% if bag_items %}                                                                                                        <!-- add an if statement because I only want to render the table if there's something in the shopping bag. Used to handle the logic for and empty shopping bag -->
-                    <div class="table-responsive rounded"></div>                                                       <!-- contain a table to show the bag contents. Displayed if there are items in the shopping bag -->
+        <div class="row">
+            <div class="col">
+                {% if bag_items %}
+                    <div class="table-responsive rounded">
+                        {{ bag_items }}
+                    </div>
                 {% else %} <!-- -->
-                    <p class="lead mb-5">Your bag is empty.</p>                                                       <!-- Displayed if the bag is empty with the <p> text -->
-                    <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg"> <!-- and give users a link back to the products page -->
+                    <p class="lead mb-5">Your bag is empty.</p>
+                    <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg">
                         <span class="icon"> <!-- -->
                             <i class="fas fa-chevron-left"></i> <!-- -->
                         </span> <!-- -->
