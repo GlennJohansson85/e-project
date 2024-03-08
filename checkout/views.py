@@ -29,7 +29,7 @@ def checkout(request):
             'county': request.POST['county'],
         }
         order_form = OrderForm(form_data)
-        if order_form.is_valid():                                                                                   # 1. If order is valid
+        if order_form.is_valid():                                                                                    # 1. If order is valid
             order = order_form.save()                                                                           # 2.  We save the order
             for item_id, item_data in bag.items():                                                        # 3. Iterate through the bag items to create each line item
                 try:
@@ -59,7 +59,7 @@ def checkout(request):
                     return redirect(reverse('view_bag'))                                                        # 9. And return the user to the shopping bag
 
             request.session['save_info'] = 'save-info' in request.POST                             # 10. If the user wants to safe their profile information for this session
-            return redirect(reverse('checkout_success', args=[order.order_number]))# 11.  And then redirect them to a new page
+            return redirect(reverse('checkout_success', args=[order.order_number])) # 11.  And then redirect them to a new page
         else:                                                                                                                          # If the order form is invalid we provide them with the form errors shown
             messages.error(request, 'There was an error with your form. \
             Please double check your information.')
