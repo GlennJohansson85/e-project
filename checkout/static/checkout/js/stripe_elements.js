@@ -50,6 +50,8 @@ form.addEventListener('submit', function(ev) {
     ev.preventDefault();                                                                            // b) is to prevent its default action - In our case is to post
     card.update({ 'disabled': true});                                                          // d) Before we call out to stripe we want to disable the card element  and
     $('#submit-button').attr('disabled', true);                                           // e) the submit button to prevent multiple submissions      
+    $('#payment-form').fadeToggle(100);                                                // 1. Line 53-54 Trigger the overlay and fade out the form when the user clicks the submit button 
+    $('#loading-overlay').fadeToggle(100);
     stripe.confirmCardPayment(clientSecret, {                                       // c) It uses the stripe.confirm card payment method to send the card information securely to stripe.
         payment_method: {                                                                         // f) Call the confirm payment method
             card: card,                                                                                     // g) Provide the card to stripe
@@ -63,6 +65,8 @@ form.addEventListener('submit', function(ev) {
                 </span>
                 <span>${result.error.message}</span>`;
             $(errorDiv).html(html);                                                                 // k) re-enable the card element and the submit button to allow the user to fix it. 66 - 68
+            $('#payment-form').fadeToggle(100);                                         //2. Line 68-69 and reverse that if there is any errors
+            $('#loading-overlay').fadeToggle(100);
             card.update({ 'disabled': false});
             $('#submit-button').attr('disabled', false);
         } else {                                                                                                // j) If the status of the payment intent comes back is succeeded we'll submit the form.
