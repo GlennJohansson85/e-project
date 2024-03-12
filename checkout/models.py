@@ -22,7 +22,9 @@ class Order(models.Model):
     delivery_cost = models.DecimalField(max_digits=6, decimal_places=2, null=False, default=0)                                 # calculated using a model method whenever an order is saved.
     order_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)                                   # calculated using a model method whenever an order is saved.#
     grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)                                  # calculated using a model method whenever an order is saved.#
-
+    original_bag = models.TextField(null=False, blank=False, default='')                                                                             # text field that will contain the original shopping bag that created it.
+    stripe_pid = models.CharField(max_length=254, null=False, blank=False, default='')                                                  # character field that will contain the stripe payment intent id which is guaranteed to be unique.
+    
     def _generate_order_number(self):                                                                                                                                       #  prepended with an underscore by convention to indicate it's a private method which will only be used inside this class.
         """
         Generate a random, unique order number using UUID

@@ -12,13 +12,13 @@ class OrderAdmin(admin.ModelAdmin):
 
     readonly_fields = ('order_number', 'date', # These fields are all things that will be calculated by our model methods. don't want anyone to have the ability to edit them since it could compromise the integrity of an order.
                        'delivery_cost', 'order_total',
-                       'grand_total',)
+                       'grand_total', 'original_bag', 'stripe_pid')
 
     fields = ('order_number', 'date', 'full_name', # Fields options -Order stays the same as it appears in the model
               'email', 'phone_number', 'country',
               'postcode', 'town_or_city', 'street_address1',
               'street_address2', 'county', 'delivery_cost',
-              'order_total', 'grand_total',)
+              'order_total', 'grand_total', 'original_bag', 'stripe_pid')
 
     list_display = ('order_number', 'date', 'full_name', # To restrict the columns that show up in the order list to only a few key items. And I'll set them to be ordered by date in reverse chronological order putting the most recent orders at the top.
                     'order_total', 'delivery_cost',
