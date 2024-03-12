@@ -70,7 +70,7 @@
                         <div class="dropdown-menu border-0" aria-labelledby="user-options">
                             {% if request.user.is_authenticated %} <!-- If user is authenticated we want the dropdown to display their profile and link to logout -->
                                 {% if request.user.is_superuser %} <!-- If user is authenticated and a superuser we show a link to manage the store by adding, updating, deleting products -->
-                                    <a href="" class="dropdown-item">Product Management</a>
+                                    <a href="{% url 'profile' %}" class="dropdown-item">Product Management</a>
                                 {% endif %}
                                 <a href="" class="dropdown-item">My Profile</a>
                                 <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
