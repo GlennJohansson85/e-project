@@ -178,5 +178,6 @@ STRIPE_CURRENCY = 'usd'
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', 'pk_test_51OrOQHLNdOdNq26myqf8cNrTM2NQ6bmUVg6wWcmpMMjXVOJRn3ixAeO4FQZX0XAOqNFoOy4VpleDFzGkOynGeLyH00HgZMCprG')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', 'sk_test_51OrOQHLNdOdNq26mqqyhWiIx0U3PWO1DRKnTvwpnct4kdJZ4IRVmfwNuGiOWlw1znWuurahqDEl2bRDrZawKfjx400C5YOsBpc')
 STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
+DEFAULT_FROM_EMAIL = 'boutique@example.com'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' # This is not in the lesson
