@@ -2,6 +2,7 @@ from django.http import HttpResponse
 
 from .models import Order, OrderLineItem
 from products.models import Product
+from profiles.models import UserProfile
 
 import json
 import time
@@ -38,12 +39,27 @@ class StripeWH_Handler:
             if value == "":
                 shipping_details.address[field] = None
 
-        order_exists = False                                                                                                    # 1. Do this assuming the order doesnt exist
-        attempt = 1                                                                                                                    # 8. Delay
-        while attempt <= 5:                                                                                                        # 9. While loop that will execute up to 5 times
+        # Update profile information if save_info was checked
+        profile = None                                                                                                      # Allow anonymous users to checkout
+        username = intent.metadata.username                                                            # Get username by <---
+        if username != 'AnonymousUser':                                                                       # if the username isn't anonymous user. We know they were authenticated.
+            profile = UserProfile.objects.get(user__username=username)
+            if save_info:
+                profile.default_phone_number = shipping_details.phone
+                profile.default_country = shipping_details.address.country
+                profile.default_postcode = shipping_details.address.postal_code
+                profile.default_town_or_city = shipping_details.address.city
+                profile.default_street_address1 = shipping_details.address.line1
+                profile.default_street_address2 = shipping_details.address.line2
+                profile.default_county = shipping_details.address.state
+                profile.save()
+
+        order_exists = False
+        attempt = 1
+        while attempt <= 5:
             try:
-                order = Order.objects.get(                                                                                   # 2. Then we'll try to get the order using all the information from the payment intent.
-                    full_name__iexact=shipping_details.name,                                                  # 3. Using the iexact lookup field (46 -54) to make it an exact match but case-insensitive.
+                order = Order.objects.get(
+                    full_name__iexact=shipping_details.name,
                     email__iexact=billing_details.email,
                     phone_number__iexact=shipping_details.phone,
                     country__iexact=shipping_details.address.country,
@@ -56,20 +72,21 @@ class StripeWH_Handler:
                     original_bag=bag,
                     stripe_pid=pid,
                 )
-                order_exists = True                                                                                                # 4. If the order is found
-                break                                                                                                                       # 12. If order is found we should break out of the loop
+                order_exists = True
+                break
             except Order.DoesNotExist:
-                attempt += 1                                                                                                            # 10. Increment attempt by 1
-                time.sleep(1)                                                                                                             # 11. Pythons time module to sleep for one second. cause the webhook handler to try to find the order five times over five seconds before giving up and creating the order itself.
-        if order_exists:                                                                                                                # 13. Outside the loop, I'll check whether order_exists has been set to true.
-            return HttpResponse(                                                                                                # 5. and return a 200 HTTP response to stripe, with the message that we verified the order already exists.
+                attempt += 1
+                time.sleep(1)
+        if order_exists:
+            return HttpResponse(
                 content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database',
                 status=200)
-        else:                                                                                                                                  # 6. If the order is not found 14 we create the order
+        else:
             order = None
             try:
                 order = Order.objects.create(
                     full_name=shipping_details.name,
+                    user_profile=profile,
                     email=billing_details.email,
                     phone_number=shipping_details.phone,
                     country=shipping_details.address.country,
