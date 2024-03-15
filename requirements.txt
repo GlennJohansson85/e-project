@@ -17,7 +17,7 @@ cryptography==42.0.2
 DateTime==5.4
 defusedxml==0.7.1
 deprecation==2.1.0
-dj-database-url==2.1.0
+dj-database-url==0.5.0
 Django==3.2.24
 django-allauth==0.61.1
 django-bootstrap4==23.4
