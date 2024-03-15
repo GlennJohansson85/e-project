@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 import dj_database_url
-from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -61,7 +61,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'boutique.urls'
@@ -79,7 +78,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request', # required by allauth - to access http request in templates
+                'django.template.context_processors.request', # required by allauth
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
@@ -107,13 +106,13 @@ SITE_ID = 1
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-ACCOUNT_AUTHENTICATION_METHOD = "username_email" # Telling allauth its ok to use either username or email
-ACCOUNT_EMAIL_REQUIRED = True # Required to register to the site
-ACCOUNT_EMAIL_VERIFICATION = "mandatory" # So we know users use a real email
-ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True # Users need to register their email twice incase of typos
-ACCOUNT_USERNAME_MIN_LENGTH = 4 #User name must be a minimum of 4 characters
-LOGIN_URL = "/accounts/login/" # Specifiying  a URL login
-LOGIN_REDIRECT_URL = "/" # A URL to redirect back to after login in
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'boutique.wsgi.application'
 
@@ -162,12 +161,11 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
+# https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/' # Tells Django where all of our static files are located.
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),) 
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
-# 154, 155 is where all uploaded media files will go.
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -175,9 +173,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 FREE_DELIVERY_THRESHOLD = 50
 STANDARD_DELIVERY_PERCENTAGE = 10
 STRIPE_CURRENCY = 'usd'
-STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', 'pk_test_51OrOQHLNdOdNq26myqf8cNrTM2NQ6bmUVg6wWcmpMMjXVOJRn3ixAeO4FQZX0XAOqNFoOy4VpleDFzGkOynGeLyH00HgZMCprG')
-STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', 'sk_test_51OrOQHLNdOdNq26mqqyhWiIx0U3PWO1DRKnTvwpnct4kdJZ4IRVmfwNuGiOWlw1znWuurahqDEl2bRDrZawKfjx400C5YOsBpc')
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
 STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
 DEFAULT_FROM_EMAIL = 'boutique@example.com'
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' # This is not in the lesson
