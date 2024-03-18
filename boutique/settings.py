@@ -110,12 +110,12 @@ SITE_ID = 1
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 ACCOUNT_AUTHENTICATION_METHOD = "username_email" # Telling allauth its ok to use either username or email
-ACCOUNT_EMAIL_REQUIRED = True # Required to register to the site
-ACCOUNT_EMAIL_VERIFICATION = "mandatory" # So we know users use a real email
-ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True # Users need to register their email twice incase of typos
-ACCOUNT_USERNAME_MIN_LENGTH = 4 #User name must be a minimum of 4 characters
-LOGIN_URL = "/accounts/login/" # Specifiying  a URL login
-LOGIN_REDIRECT_URL = "/" # A URL to redirect back to after login in
+ACCOUNT_EMAIL_REQUIRED = True                                           # Required to register to the site
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"                       # So we know users use a real email
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True                     # Users need to register their email twice incase of typos
+ACCOUNT_USERNAME_MIN_LENGTH = 4                                   # User name must be a minimum of 4 characters
+LOGIN_URL = "/accounts/login/"                                                 # Specifiying  a URL login
+LOGIN_REDIRECT_URL = "/"                                                         # A URL to redirect back to after login in
 
 WSGI_APPLICATION = 'boutique.wsgi.application'
 
