@@ -31,8 +31,8 @@ class StripeWH_Handler:
             body,
             settings.DEFAULT_FROM_EMAIL,
             [cust_email]
-        )            
-        
+        )        
+
     def handle_event(self, event):
         """
         Handle a generic/unknown/unexpected webhook event
@@ -60,9 +60,9 @@ class StripeWH_Handler:
                 shipping_details.address[field] = None
 
         # Update profile information if save_info was checked
-        profile = None                                                                                                      # Allow anonymous users to checkout
-        username = intent.metadata.username                                                            # Get username by <---
-        if username != 'AnonymousUser':                                                                       # if the username isn't anonymous user. We know they were authenticated.
+        profile = None
+        username = intent.metadata.username
+        if username != 'AnonymousUser':
             profile = UserProfile.objects.get(user__username=username)
             if save_info:
                 profile.default_phone_number = shipping_details.phone
@@ -143,11 +143,10 @@ class StripeWH_Handler:
                 return HttpResponse(
                     content=f'Webhook received: {event["type"]} | ERROR: {e}',
                     status=500)
-        self._send_confirmation_email(order)   
+        self._send_confirmation_email(order)
         return HttpResponse(
             content=f'Webhook received: {event["type"]} | SUCCESS: Created order in webhook',
             status=200)
-
 
     def handle_payment_intent_payment_failed(self, event):
         """

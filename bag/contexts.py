@@ -31,16 +31,16 @@ def bag_contents(request):
                     'product': product,
                     'size': size,
                 })
-    
-    if total < settings.FREE_DELIVERY_THRESHOLD:                                                # Checks whether there is less than 0 items in the back. 
-        delivery = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE)   # If it is less we'll calculate delivery as the total multiplied by the standard delivery percentage from settings.py. which in this case is 10%.
-        free_delivery_delta = settings.FREE_DELIVERY_THRESHOLD - total           # A variable for free delivery - Lets user now how much more they can spend to get free delivery
-    else:                                                                                                                           # If the total is greater than or equal to the threshold let's set delivery and the free_delivery_delta to zero.
+
+    if total < settings.FREE_DELIVERY_THRESHOLD:
+        delivery = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
+        free_delivery_delta = settings.FREE_DELIVERY_THRESHOLD - total
+    else:
         delivery = 0
         free_delivery_delta = 0
-        
-    grand_total = delivery + total                                                                                # to calculate the grand total. All I need to do is add the delivery charge to the total.
-        
+    
+    grand_total = delivery + total
+    
     context = {
         'bag_items': bag_items,
         'total': total,
@@ -50,5 +50,5 @@ def bag_contents(request):
         'free_delivery_threshold': settings.FREE_DELIVERY_THRESHOLD,
         'grand_total': grand_total,
     }
-    
+
     return context

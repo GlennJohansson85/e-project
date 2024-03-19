@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Product, Category
 
 # Register your models here.
-# Classes below will extend the built in model admin class. The order is how it will be displayed on admin dashboard.
+
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
         'sku',
