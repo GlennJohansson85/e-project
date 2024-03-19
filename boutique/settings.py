@@ -40,6 +40,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'boutique.urls'
@@ -83,15 +84,15 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 1
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
-ACCOUNT_USERNAME_MIN_LENGTH = 4
-LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/'
+ACCOUNT_AUTHENTICATION_METHOD = "username_email" # Telling allauth its ok to use either username or email
+ACCOUNT_EMAIL_REQUIRED = True                                           # Required to register to the site
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"                       # So we know users use a real email
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True                     # Users need to register their email twice incase of typos
+ACCOUNT_USERNAME_MIN_LENGTH = 4                                   # User name must be a minimum of 4 characters
+LOGIN_URL = "/accounts/login/"                                                 # Specifiying  a URL login
+LOGIN_REDIRECT_URL = "/"                                                         # A URL to redirect back to after login in
 
 WSGI_APPLICATION = 'boutique.wsgi.application'
 
@@ -162,10 +163,10 @@ if 'USE_AWS' in os.environ:
     }
     
     # Bucket Config
-    AWS_STORAGE_BUCKET_NAME = 'boutique-aws'
-    AWS_S3_REGION_NAME = 'eu-north-1'
-    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = 'boutique-aws' # not sure this is the correct bucket
+    AWS_S3_REGION_NAME = 'eu-north-1' # not sure this is correct
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID') # Dont add key
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY') # Dont add key
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
     
     # Static and media files
