@@ -3,7 +3,7 @@ import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.environ.get('SECRET_KEY', '')
+SECRET_KEY = os.environ.get('SECRET_KEY', '%n$eveiibpp_1_79gp9f)r)i9ifkkojpu6-ab31+mow*qp-k')
 
 DEBUG = 'DEVELOPMENT' in os.environ
 
