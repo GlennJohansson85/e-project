@@ -1,5 +1,5 @@
 """
-WSGI config for boutique_ado project.
+WSGI config for boutique project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
