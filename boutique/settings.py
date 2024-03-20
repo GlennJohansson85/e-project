@@ -14,7 +14,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 DEBUG = 'DEVELOPMENT' in os.environ
 
-ALLOWED_HOSTS = ['boutique-database-eddaed62a1ba.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['boutique-database-eddaed62a1ba.herokuapp.com', 'http://127.0.0.1:8000/']
 
 
 INSTALLED_APPS = [
