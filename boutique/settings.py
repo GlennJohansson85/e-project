@@ -6,8 +6,6 @@ import dj_database_url
 if os.path.isfile('env.py'):
     import env
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
@@ -16,6 +14,7 @@ DEBUG = 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = ['boutique-database-eddaed62a1ba.herokuapp.com', 'http://127.0.0.1:8000/']
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
