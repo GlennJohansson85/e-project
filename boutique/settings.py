@@ -12,7 +12,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 DEBUG = 'DEVELOPMENT' in os.environ
 
-ALLOWED_HOSTS = ['boutique-database-eddaed62a1ba.herokuapp.com', 'http://127.0.0.1:8000/']
+ALLOWED_HOSTS = ['boutique-database-eddaed62a1ba.herokuapp.com', '127.0.0.1']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
