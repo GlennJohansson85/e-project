@@ -116,7 +116,6 @@ else:
         }
     }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -134,7 +133,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -166,7 +164,6 @@ if 'USE_AWS' in os.environ:
         'CacheControl': 'max-age=94608000',
     }
 
-    
     # Bucket Config
     AWS_STORAGE_BUCKET_NAME = 'boutique-aws'
     AWS_S3_REGION_NAME = 'eu-north-1'
@@ -183,7 +180,6 @@ if 'USE_AWS' in os.environ:
     # Override static and media URLs in production
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
-
 
 # Stripe
 FREE_DELIVERY_THRESHOLD = 50
