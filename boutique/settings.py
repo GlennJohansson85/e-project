@@ -1,4 +1,3 @@
-# SETTINGS.PY
 from pathlib import Path
 import os
 from django.contrib.messages import constants as messages
